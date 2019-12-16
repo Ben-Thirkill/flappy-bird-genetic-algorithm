@@ -31,7 +31,6 @@ Public Class Form1
             Dim item = pipes(i)
             If Not IsNothing(item) Then
 
-
                 item.move(pipes)
                 Dim Halfsies As Integer = 50
                 If item.X + 10 > Halfsies And item.X + 10 < Halfsies + 2 Then
@@ -53,15 +52,12 @@ Public Class Form1
         Dim frame As New Bitmap(graphicBox.Width, graphicBox.Height)
         Using g As Graphics = Graphics.FromImage(frame)
             For Each item In birds
-
-
                 item.draw(g)
             Next
 
             For i = 0 To pipes.Count() - 1
                 Dim item = pipes(i)
                 If Not IsNothing(item) Then
-
                     item.draw(g, graphicBox)
                 End If
 
@@ -160,7 +156,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub graphicBox_Click(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown, graphicBox.Click
+    Private Sub graphicBox_Click(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.Space Then
             For Each item In birds
                 If item.UserControlled Then
