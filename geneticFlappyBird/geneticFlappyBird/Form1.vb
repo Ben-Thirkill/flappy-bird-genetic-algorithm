@@ -6,6 +6,7 @@ Public Class Form1
     Dim birds As List(Of bird) = New List(Of bird)
     Dim pipes As List(Of PipePair) = New List(Of PipePair)
 
+  ' This subroutine initializes the game by creating a new pipe pair and placing the birds.
     Sub initializeGame(b)
         pointsLabel.Text = 0
         birds = b
@@ -21,12 +22,17 @@ Public Class Form1
         Next
     End Sub
 
+' This handles the logic behind each frame.
     Sub logicFrame()
+    
+    ' We want the birds to move. We also run their 'Think' subroutine which is used to calculate their relative scores
         For Each item In birds
             item.move(graphicBox, pipes, birdsLiving)
             item.think(pipes, graphicBox)
         Next
 
+' This handles both creating new pipes and deleting the old ones.
+' This also adds 1 to the score for every time the pipe passes the birds.
         For i = 0 To pipes.Count() - 1
             Dim item = pipes(i)
             If Not IsNothing(item) Then
@@ -48,6 +54,8 @@ Public Class Form1
         Next
     End Sub
 
+'This subroutine is responsible for drawing the graphics onto the screen.
+' We simply draw the birds and the pipes in this subroutine.
     Sub drawFrame()
         Dim frame As New Bitmap(graphicBox.Width, graphicBox.Height)
         Using g As Graphics = Graphics.FromImage(frame)
@@ -68,6 +76,8 @@ Public Class Form1
         graphicBox.Image = frame
     End Sub
 
+' This is the main subroutine within the genetic algorithm. 
+' This uses the birds fitness data in order to calculate which birds should be passed onto the new generation
     Sub createNewGeneration()
 
         Dim newGeneration As List(Of bird) = New List(Of bird)
@@ -75,7 +85,9 @@ Public Class Form1
             .Fitness = 0
         }
 
-        'Evaluate Chances and generate most fit bird'
+' Evaluate Chances and generate most fit bird'
+' We still want less successful birds to have a chance of being passed through as variation is important.
+' Without variation we would be more likely to find a local maximum solution to the problem.
         Dim overallFitness = 0
         For Each item In birds
 
